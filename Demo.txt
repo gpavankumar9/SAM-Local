@@ -1,0 +1,37 @@
+Install Setup
+
+Install Docker Desktop: To install Docker for Windows 10, see Install Docker Desktop for Windows.
+Install Windows subsystem for Linux - https://docs.microsoft.com/en-us/windows/wsl/install-win10
+Install Python extension and AWS Took Kit
+AWS configuration set up
+SAM CLI 
+SAM Application code
+
+Demo
+----------
+SAM Local LAMBDA Invoke:
+sam local invoke HelloWorldFunction
+-----------------------------------------------
+SAM Local LAMBDA invoke with S3 event:
+SAM template should have S3 bucket reference
+Connected to AWS using profile
+sam local generate-event s3 put >> ./events/event-s3.json
+sam local invoke  -e ./events/event-s3.json
+--------------------------------------------------
+SAM Local LAMBDA Invoke with API Gateway event:
+POST event, sending data to LAMBDA and using the data
+sam local invoke  -e ./events/event.json
+---------------------------------------------------------------
+SAM Local LAMBDA debug
+
+
+--------------------------------------------------
+SAM Local LAMBDA invoke with Local DynamoDB
+
+sam local invoke  -e ./events/event.json --docker-network lambda-local
+
+aws dynamodb scan --table-name ContactRequests --endpoint-url=http://127.0.0.1:8000  
+
+We can also start Local APi GATEWAY and test using Browser
+sam local start-api --docker-network lambda-local
+http://127.0.0.1:3000/hello?id=1234&name=test-user
